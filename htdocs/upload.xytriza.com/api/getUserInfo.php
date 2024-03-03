@@ -16,9 +16,9 @@ if ($conn->connect_error) {
 }
 
 $apikey = isset($_SERVER['HTTP_KEY']) ? $_SERVER['HTTP_KEY'] : '';
-$fileid = isset($_SERVER['HTTP_FILEID']) ? $_SERVER['HTTP_FILEID'] : '';
+$uid = isset($_GET['uid']) ? $_GET['uid'] : '';
 
-if (empty($apikey) || empty($fileid)) {
+if (empty($apikey)) {
     $response = [
         'success' => 'false',
         'response' => 'Invalid request',
@@ -28,7 +28,7 @@ if (empty($apikey) || empty($fileid)) {
     die(json_encode($response));
 }
 
-$stmt = $conn->prepare("SELECT uid FROM users WHERE api_key = ?");
+$stmt = $conn->prepare("SELECT * FROM users WHERE api_key = ?");
 $stmt->bind_param("s", $apikey);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -36,8 +36,8 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
 
-    $stmt = $conn->prepare("SELECT * FROM uploads WHERE id = ?");
-    $stmt->bind_param("s", $fileid);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE uid = ?");
+    $stmt->bind_param("s", $uid);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -45,29 +45,36 @@ if ($result->num_rows > 0) {
     if ($result->num_rows == 0) {
         $response = [
             'success' => 'false',
-            'response' => 'File not found',
+            'response' => 'User not found',
         ];
         http_response_code(404);
         header('Content-Type: application/json');
         die(json_encode($response));
     }
 
-    $fileInfo = $result->fetch_assoc();
+    $userInfo = $result->fetch_assoc();
+    $role = $userInfo['role'] == 1 ? "Owner" : ($userInfo['role'] == 2 ? "Manager" : ($userInfo['role'] == 0 ? "User" : "Unknown"));
+    if ($userInfo['discord_id'] == null || $userInfo['discord_id'] == "") {
+        $userInfo['discord_id'] = "N/A";
+    }
+    if ($userInfo['discord_avatar'] == null || $userInfo['discord_avatar'] == "") {
+        $userInfo['discord_avatar'] = "N/A";
+    }
 
     $info = [
-        'id' => $fileid,
-        'uploaderUid' => $fileInfo['uid'],
-        'size' => $fileInfo['size'],
-        'sizeFormatted' => formatUnitSize($fileInfo['size']),
-        'uploadedAt' => $fileInfo['uploaded'],
-        'fileName' => base64_decode($fileInfo['original_name']),
-        'fileType' => $fileInfo['filetype'],
+        'id' => $userInfo['uid'],
+        'username' => $userInfo['username'],
+        'displayName' => $userInfo['display_name'],
+        'discordId' => $userInfo['discord_id'],
+        'role' => $role,
+        'registerTime' => $userInfo['register_time'],
+        'avatar' => $userInfo['discord_avatar'],
     ];
 
     $response = [
         'success' => true,
-        'response' => 'Information for file "' . $fileid . '"',
-        'fileinfo' => $info,
+        'response' => 'Information for user "' . $fileid . '"',
+        'userinfo' => $info,
     ];
 
     http_response_code(200);

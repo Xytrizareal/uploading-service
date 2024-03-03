@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 $apikey = isset($_SERVER['HTTP_KEY']) ? $_SERVER['HTTP_KEY'] : '';
-$uid = isset($_GET['uid']) ? $_GET['uid'] : '';
+$uid = isset($_SERVER['HTTP_UID']) ? $_SERVER['HTTP_UID'] : '';
 
 if (empty($apikey)) {
     $response = [

@@ -73,7 +73,7 @@ if ($result->num_rows > 0) {
 
     $response = [
         'success' => true,
-        'response' => 'Information for user "' . $fileid . '"',
+        'response' => 'Information for user "' . $userInfo['display_name'] . '"',
         'userinfo' => $info,
     ];
 

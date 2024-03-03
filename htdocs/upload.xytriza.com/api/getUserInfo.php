@@ -62,7 +62,7 @@ if ($result->num_rows > 0) {
     }
 
     $info = [
-        'id' => $userInfo['uid'],
+        'uid' => $userInfo['uid'],
         'username' => $userInfo['username'],
         'displayName' => $userInfo['display_name'],
         'discordId' => $userInfo['discord_id'],

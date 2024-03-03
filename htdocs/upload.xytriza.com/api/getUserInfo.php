@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
 
     $stmt = $conn->prepare("SELECT * FROM users WHERE uid = ?");
-    $stmt->bind_param("s", $uid);
+    $stmt->bind_param("i", $uid);
     $stmt->execute();
 
     $result = $stmt->get_result();

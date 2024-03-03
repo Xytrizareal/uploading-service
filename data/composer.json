@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^6.9",
+        "google/cloud-storage": "^1.39"
+    }
+}

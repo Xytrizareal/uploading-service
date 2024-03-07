@@ -29,7 +29,7 @@ We do not recommend using this service on your own server, as it is highly recom
 - Xytriza - Developer and Owner of the service
 
 ## License
-This service is licensed under the MIT License. You can view the license [here](https://github.com/Xytrizareal/uploading-service/blob/master/LICENSE.txt).
+This service is licensed under the Apache 2.0 License. You can view the license [here](https://github.com/Xytrizareal/uploading-service/blob/master/LICENSE.txt).
 
 ## Contact
 If you would like to contact us, you can do so by emailing us at contact@xytriza.com or joining the official [Discord server](https://upload.xytriza.com/discord).

@@ -160,7 +160,7 @@ if (isset($_COOKIE['session'])) {
 <body>
     <div id="main-container">
         <h1>Welcome Back!</h1>
-        <p>Please login to you account to continue</p>
+        <p>Please login to your account to continue</p>
         <form id="loginForm">
             <input type="text" id="username" placeholder="Username" required>
             <input type="password" id="password" placeholder="Password" required>

@@ -257,7 +257,7 @@
         </div>
     </div>
     <footer>
-        <p>&copy; 2024 Xytriza | <a href="mailto:contact@yourcompany.com">Contacts</a> | <a href="mailto:abuse@yourcompany.com">Abuse</a> | <a href="/privacy">Privacy</a> | <a href="/terms">Terms</a> | <a href="mailto:support@yourcompany.com">Support</a> | <a href="/discord">Discord</a></p>
+        <p>&copy; 2024 Xytriza | <a href="mailto:cryfxreal@gmail.com">Contact</a> | <a href="/privacy">Privacy</a> | <a href="/terms">Terms</a> | <a href="/discord">Discord</a></p>
     </footer>
 </body>
 </html>

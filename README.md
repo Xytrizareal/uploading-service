@@ -20,7 +20,7 @@ We do not recommend using this service for public use, as it is highly recommend
 If you find any bugs or issues, please report them to the GitHub issues page. We will try to fix them as soon as possible.
 
 ## Severe Exploits and Vulnerabilities
-If you find any severe exploits or vulnerabilities, please email us at contact@xytriza.com. We will try to fix them as soon as possible.
+If you find any severe exploits or vulnerabilities, please email us at cryfxreal@gmail.com. We will try to fix them as soon as possible.
 
 ## Other Information
 We do not recommend using this service on your own server, as it is highly recommended to use the official service instead until we release a stable version of the service.
@@ -32,4 +32,4 @@ We do not recommend using this service on your own server, as it is highly recom
 This service is licensed under the Apache 2.0 License. You can view the license [here](https://github.com/Xytrizareal/uploading-service/blob/master/LICENSE.txt).
 
 ## Contact
-If you would like to contact us, you can do so by emailing us at contact@xytriza.com or joining the official [Discord server](https://upload.xytriza.com/discord).
+If you would like to contact us, you can do so by emailing us at cryfxreal@gmail.com or joining the official [Discord server](https://upload.xytriza.com/discord).

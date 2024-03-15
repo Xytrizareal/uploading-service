@@ -24,6 +24,11 @@ if ($conn->connect_error) {
 
 $file = rtrim(str_replace("/files/", "", htmlspecialchars($_GET["url"])), "/");
 
+if ($_GET['raw'] == 'true') {
+    $file = str_replace("?raw=true", "", $file);
+    header("Location: https://storage.googleapis.com/$googleBucketName/$file");
+}
+
 $storage = new StorageClient([
     'projectId' => $googleProjectId,
     'keyFilePath' => $googleKeyFilePath,
@@ -44,13 +49,13 @@ if (!$stmt->fetch()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xytriza's Uploading Service - File not found</title>
-    <link rel="icon" href="https://upload.xytriza.com/assets/logo.png" type="image/png">
+    <link rel="icon" href="/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://upload.xytriza.com/dashboard/assets/main.css?v=<?php echo filemtime('/home/xytriza-upload/htdocs/upload.xytriza.com/dashboard/assets/main.css'); ?>">
+    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.css'); ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://upload.xytriza.com/dashboard/assets/main.js?v=<?php echo filemtime('/home/xytriza-upload/htdocs/upload.xytriza.com/dashboard/assets/main.js'); ?>"></script>
+    <script src="/dashboard/assets/main.js?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.js'); ?>"></script>
 </head>
 <body>
     <?php
@@ -62,7 +67,7 @@ if (!$stmt->fetch()) {
         $role = $stmt->get_result()->fetch_assoc()["role"];
         ?>
     <div id="sidebar">
-        <a href="/" class="logo"><img class="sidebar-item" src="https://upload.xytriza.com/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
+        <a href="/" class="logo"><img class="sidebar-item" src="/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
         <a href="/dashboard/"><i class="fas fa-home sidebar-item"></i></a>
         <a href="/dashboard/gallery.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>
         <a href="/dashboard/upload.php"><i class="fas fa-upload sidebar-item"></i></a>
@@ -101,7 +106,7 @@ if (!$stmt->fetch()) {
 
 $stmt->close();
 
-$fileUrl = "https://files.upload.xytriza.com/{$file}";
+$fileUrl = "https://storage.googleapis.com/$googleBucketName/$file";
 
 $stmt = $conn->prepare("SELECT display_name, timezone FROM users WHERE uid = ?");
 $stmt->bind_param("s", $uid);
@@ -169,7 +174,7 @@ $original_filename = base64_decode($original_filename);
     </script>
     <meta name="robots" content="noindex">
     <title><?php echo $original_filename . ' - ' . $username;?></title>
-    <link rel="icon" href="https://upload.xytriza.com/assets/logo.png" type="image/png">
+    <link rel="icon" href="/assets/logo.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="description" content="<?php echo 'Uploaded ' . $formattedDate . ' by ' . $username;?>">
     <meta property="og:title" content="<?php echo $original_filename?>">
@@ -187,9 +192,9 @@ $original_filename = base64_decode($original_filename);
     <meta property="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://upload.xytriza.com/dashboard/assets/main.css?v=<?php echo filemtime('/home/xytriza-upload/htdocs/upload.xytriza.com/dashboard/assets/main.css'); ?>">
+    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.css'); ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://upload.xytriza.com/dashboard/assets/main.js?v=<?php echo filemtime('/home/xytriza-upload/htdocs/upload.xytriza.com/dashboard/assets/main.js'); ?>"></script>
+    <script src="/dashboard/assets/main.js?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.js'); ?>"></script>
     <style>
         img {
             max-width: 50vw;
@@ -207,7 +212,7 @@ $original_filename = base64_decode($original_filename);
         $role = $stmt->get_result()->fetch_assoc()["role"];
         ?>
     <div id="sidebar">
-        <a href="/" class="logo"><img class="sidebar-item" src="https://upload.xytriza.com/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
+        <a href="/" class="logo"><img class="sidebar-item" src="/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
         <a href="/dashboard/"><i class="fas fa-home sidebar-item"></i></a>
         <a href="/dashboard/gallery.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>
         <a href="/dashboard/upload.php"><i class="fas fa-upload sidebar-item"></i></a>
@@ -255,7 +260,7 @@ $original_filename = base64_decode($original_filename);
             if (in_array($fileType, ["text/plain"])) {
                 echo '<button class="button" onclick="copyToClipboard(\'' . $fileContent . '\', \'File content copied to clipboard\', 0)">Copy</button>';
             }
-            if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], "https://upload.xytriza.com/dashboard/gallery.php") !== false) {
+            if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], "$serverUrl/dashboard/gallery.php") !== false) {
                 echo '<button class="button" onclick="window.history.back()">Back</button>';
             }
             ?>

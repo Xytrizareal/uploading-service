@@ -91,9 +91,8 @@ if (isset($_GET['code']) && !empty($_GET['code']) && isset($_COOKIE['session']) 
     $stmt->bind_param("sssssss", $userData['id'], $data['access_token'], $data['refresh_token'], $data['expires_in'], $avatar, $userData['email'], $sqlData['email']);
     $stmt->execute();
 
-    if (isset($_COOKIE['redirect_link']) && !empty($_COOKIE['redirect_link']) && strpos($_COOKIE['redirect_link'], 'https://upload.xytriza.com/dashboard') === 0) {
+    if (isset($_COOKIE['redirect_link']) && !empty($_COOKIE['redirect_link']) && strpos($_COOKIE['redirect_link'], 'https://'.$serverPath'/dashboard') === 0) {
         setcookie('redirect_link', '', time() - 3600, '/', '', true, true);
-        // deepcode ignore OR: already validated in the if condition
         header('Location: ' . $_COOKIE['redirect_link']);
         die();
     }

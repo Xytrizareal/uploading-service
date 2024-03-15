@@ -43,17 +43,17 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xytriza's Uploading Service - Account Management</title>
-    <link rel="icon" href="https://upload.xytriza.com/assets/logo.png" type="image/png">
+    <link rel="icon" href="/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://upload.xytriza.com/dashboard/assets/main.css?v=<?php echo filemtime('/home/xytriza-upload/htdocs/upload.xytriza.com/dashboard/assets/main.css'); ?>">
+    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.css'); ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://upload.xytriza.com/dashboard/assets/main.js?v=<?php echo filemtime('/home/xytriza-upload/htdocs/upload.xytriza.com/dashboard/assets/main.js'); ?>"></script>
+    <script src="/dashboard/assets/main.js?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.js'); ?>"></script>
 </head>
 <body>
     <div id="sidebar">
-        <a href="/" class="logo"><img class="sidebar-item" src="https://upload.xytriza.com/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
+        <a href="/" class="logo"><img class="sidebar-item" src="/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
         <a href="/dashboard/"><i class="fas fa-home sidebar-item"></i></a>
         <a href="/dashboard/gallery.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>
         <a href="/dashboard/upload.php"><i class="fas fa-upload sidebar-item"></i></a>

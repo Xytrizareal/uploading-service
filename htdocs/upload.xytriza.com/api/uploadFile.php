@@ -64,10 +64,6 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $totalSize = $row['totalSize'];
 
-//role1 is owner (150gb)
-//role2 is admin (25gb)
-//else (5gb)
-
 if ($row['role'] === 1 && $totalSize > 161061273600) {
     $response = [
         'success' => false,
@@ -151,8 +147,8 @@ if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
     $response = [
         'success' => true,
         'response' => 'File uploaded successfully',
-        'fileUrl' => 'https://upload.xytriza.com/files/'.$randomString,
-        'deletionUrl' => 'https://upload.xytriza.com/delete/'.$deleteKey,
+        'fileUrl' => "$serverUrl/files/$randomString",
+        'deletionUrl' => "$serverUrl/delete/$deleteKey",
         'deletionKey' => $deleteKey,
     ];
 

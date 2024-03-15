@@ -39,7 +39,7 @@ $config = '{
     "Name": "Xytriza\'s Uploading Service",
     "DestinationType": "ImageUploader, FileUploader",
     "RequestType": "POST",
-    "RequestURL": "https://upload.xytriza.com/api/uploadFile.php",
+    "RequestURL": "'.$serverUrl.'/api/uploadFile.php",
     "FileFormName": "file",
     "Body": "MultipartFormData",
     "Headers": {

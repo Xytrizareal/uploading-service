@@ -28,7 +28,10 @@ $captchaType = 1; // 1 for hCaptcha, 2 for reCaptcha and 3 for CF-Turnstile
 $CaptchaKey = '';
 $CaptchaSecret = '';
 
-if (empty($dbservername) || empty($dbusername) || empty($dbpassword) || empty($dbname) || empty($googleProjectId) || empty($googleBucketName) || empty($googleKeyFilePath)) {
+$serverUrl = ''; // the server's url, example: https://upload.xytriza.com
+$serverPath = ''; // the server's folder path, example: /home/xytriza-upload/htdocs/upload.xytriza.com
+
+if (empty($dbservername) || empty($dbusername) || empty($dbpassword) || empty($dbname) || empty($googleProjectId) || empty($googleBucketName) || empty($googleKeyFilePath) || empty($serverUrl) || empty($serverPath)) {
     http_response_code(500);
     die("Please check your config file (are all fields filled in?).");
 }

@@ -167,7 +167,7 @@ if ($result->num_rows > 0) {
             <p>Thank you for signing up with Xytriza\'s Uploading Service! We\'re excited to have you on board.</p>
             <p>To complete the registration process, please click on the link below to confirm your email address:</p>
     
-            <a href="https://upload.xytriza.com/confirm-email/' . $emailconfirm . '">Confirm Your Email</a>
+            <a href="' . $serverUrl . '/confirm-email/' . $emailconfirm . '">Confirm Your Email</a>
     
             <p>If you did not sign up for Xytriza\'s Uploading Service, please disregard this email and the account will be unregistered within 2 hours.</p>
     

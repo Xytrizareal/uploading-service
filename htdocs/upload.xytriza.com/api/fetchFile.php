@@ -164,14 +164,6 @@ $original_filename = base64_decode($original_filename);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SH08WXZBBG"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-SH08WXZBBG');
-    </script>
     <meta name="robots" content="noindex">
     <title><?php echo $original_filename . ' - ' . $username;?></title>
     <link rel="icon" href="/assets/logo.png" type="image/png">

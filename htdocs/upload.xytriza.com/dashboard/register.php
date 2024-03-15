@@ -1,6 +1,7 @@
 <?php
 require '../config/config.php';
 include '../incl/main.php';
+include '../incl/captcha.php';
 
 if (isset($_COOKIE['session'])) {
     $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
@@ -14,20 +15,11 @@ if (isset($_COOKIE['session'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SH08WXZBBG"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-SH08WXZBBG');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="icon" href="https://upload.xytriza.com/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback"></script>
     <style>
         body {
             background-color: #1f1f1f;
@@ -103,11 +95,11 @@ if (isset($_COOKIE['session'])) {
         <h1>Welcome!</h1>
         <p>Please create an account to continue</p>
         <form id="loginForm">
-            <input type="text" id="email" placeholder="Email" required>
-            <input type="text" id="displayname" placeholder="Display Name (optional)">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAARIYQd110ap2OR-" data-callback="javascriptCallback"></div>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="username" id="username" name="username" placeholder="Username" required>
+            <input type="text" id="displayname" name="displayname" placeholder="Display Name (optional)" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <?php Captcha::displayCaptcha(); ?>
             <button type="submit" id="btn" style="margin-bottom: 5px;">Register</button>
         </form>
         <a id="btn" href="/dashboard/login.php">Already have an account?</a>
@@ -119,30 +111,16 @@ if (isset($_COOKIE['session'])) {
     </div>
 
     <script>
-        let captcha_token = '';
-
-        window.onloadTurnstileCallback = function () {
-            turnstile.render('.cf-turnstile', {
-                sitekey: '0x4AAAAAAARIYQd110ap2OR-',
-                callback: function (token) {
-                    captcha_token = token;
-                },
-            });
-        };
-
         $(document).ready(function () {
             $('#loginForm').on('submit', function (event) {
                 event.preventDefault();
 
-                var email = $('#email').val();
-                var displayname = $('#displayname').val();
-                var username = $('#username').val();
-                var password = $('#password').val();
+                var formData = $(this).serialize();
 
                 $.ajax({
                     type: "POST",
                     url: '../../api/registerAccount.php',
-                    data: { email: email, displayname: displayname, username: username, password: password, captcha_token: captcha_token },
+                    data: formData,
                     success: function (data, textStatus, xhr) {
                         console.log(data, xhr.status);
                         try {
@@ -219,13 +197,6 @@ if (isset($_COOKIE['session'])) {
                     error: function (xhr, textStatus, errorThrown) {
                         var response = JSON.parse(xhr.responseText);
                         alert(response.response + ' (' + xhr.status + ')');
-                        captcha_token = '';
-                        turnstile.render('.cf-turnstile', {
-                            sitekey: '0x4AAAAAAARIYQd110ap2OR-',
-                            callback: function (token) {
-                                captcha_token = token;
-                            },
-                        });
                     }
                 });
             });

@@ -1,6 +1,7 @@
 <?php
 require '../config/config.php';
 include '../incl/main.php';
+include '../incl/captcha.php';
 
 if (isset($_COOKIE['session'])) {
     $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
@@ -14,21 +15,12 @@ if (isset($_COOKIE['session'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SH08WXZBBG"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-SH08WXZBBG');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="icon" href="https://upload.xytriza.com/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback"></script>
     <style>
         body {
             background-color: #1f1f1f;
@@ -162,38 +154,23 @@ if (isset($_COOKIE['session'])) {
         <h1>Welcome Back!</h1>
         <p>Please login to your account to continue</p>
         <form id="loginForm">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAARIYQd110ap2OR-" data-callback="javascriptCallback"></div>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <?php Captcha::displayCaptcha(); ?>
             <button type="submit" id="btn" style="margin-bottom: 5px;">Login</button>
         </form>
         <a id="btn" href="/dashboard/register.php">Don't have an account?</a>
     </div>
     <script>
-        let captcha_token = ''
-        window.onloadTurnstileCallback = function () {
-            turnstile.render('.cf-turnstile', {
-                sitekey: '0x4AAAAAAARIYQd110ap2OR-',
-                callback: function(token) {
-                    captcha_token = token
-                },
-            });
-        };
-
         $('#loginForm').on('submit', function(event) {
             event.preventDefault();
 
-            if (captcha_token === '') {
-                alert("Complete the captcha");
-                return
-            }
+            var formData = $(this).serialize();
 
-            var username = $('#username').val();
-            var password = $('#password').val();
             $.ajax({
                 type: "POST",
                 url: '../../api/loginAccount.php',
-                data: {username: username, password: password, captcha_token: captcha_token},
+                data: formData,
                 complete: function(xhr, textStatus) {
                     if(xhr.status === 200) {
                         var response = JSON.parse(xhr.responseText);
@@ -205,13 +182,7 @@ if (isset($_COOKIE['session'])) {
                     } else {
                         var response = JSON.parse(xhr.responseText);
                         alert(response.response + ' (' + xhr.status + ')');
-                        captcha_token = '';
-                        turnstile.render('.cf-turnstile', {
-                            sitekey: '0x4AAAAAAARIYQd110ap2OR-',
-                            callback: function(token) {
-                                captcha_token = token
-                            },
-                        });
+                        location.reload();
                     }
                 }
             });

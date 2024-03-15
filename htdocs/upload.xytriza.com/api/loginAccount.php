@@ -1,50 +1,15 @@
 <?php
 require '../config/config.php';
 require '../incl/main.php';
+require '../incl/captcha.php';
 
-$ip = $_SERVER['REMOTE_ADDR'];
-
-$token = isset($_POST['captcha_token']) ? $_POST['captcha_token'] : '';
-
-$url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-
-$data = [
-    'secret'    => '0x4AAAAAAARIYYLl4IlaAeS9Q40g-Y6QZ9M',
-    'response'  => $token,
-    'remoteip'  => $ip,
-];
-
-$options = [
-    'http' => [
-        'header'  => 'Content-type: application/x-www-form-urlencoded',
-        'method'  => 'POST',
-        'content' => http_build_query($data),
-    ],
-];
-
-$context = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-
-if ($result !== false) {
-    $outcome = json_decode($result, true);
-
-    if (!isset($outcome['success']) || !$outcome['success']) {
-        $response = [
-            'success' => 'false',
-            'response' => 'Invalid captcha',
-        ];
-    
-        http_response_code(403);
-        header('Content-Type: application/json');
-        die(json_encode($response));
-    }
-} else {
+if(!Captcha::validateCaptcha()) {
     $response = [
         'success' => 'false',
-        'response' => 'Unable to validate captcha',
+        'response' => 'Invalid captcha',
     ];
 
-    http_response_code(500);
+    http_response_code(403);
     header('Content-Type: application/json');
     die(json_encode($response));
 }

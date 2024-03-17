@@ -37,7 +37,7 @@ if (empty($dbservername) || empty($dbusername) || empty($dbpassword) || empty($d
 }
 
 if ($enableCaptcha) {
-    if (!in_array($captchaType, [1, 2, 3]) || empty($CaptchaKey) || empty($CaptchaSecret)) {
+    if (!in_array($captchaType, [1, 2, 3]) || empty($captchaKey) || empty($captchaSecret)) {
         http_response_code(500);
         die("There are issues with your captcha configuration, please check your captcha configuration in the config file.");
     }

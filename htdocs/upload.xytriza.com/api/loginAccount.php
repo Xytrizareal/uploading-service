@@ -1,7 +1,9 @@
 <?php
 require '../config/config.php';
-require '../incl/main.php';
 require '../incl/captcha.php';
+require '../incl/mainLib.php';
+
+$main = new mainLib();
 
 if(!Captcha::validateCaptcha()) {
     $response = [
@@ -27,15 +29,6 @@ if ($conn->connect_error) {
     die(json_encode($response));
 }
 
-function generateRandomString($length) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[random_int(0, strlen($characters) - 1)];
-    }
-    return $randomString;
-}
-
 $request_username = $_POST['username'];
 $request_password = $_POST['password'];
 
@@ -51,7 +44,7 @@ if ($result->num_rows > 0) {
         if (password_verify($request_password, $row["password"])) {
             $login_ip = $_SERVER['REMOTE_ADDR'];
             $login_time = time();
-            $session_token = generateRandomString(255);
+            $session_token = $main->generateRandomString(255);
             $session_expires = $login_time + (7 * 24 * 60 * 60);
             $uid = $row['uid'];
 

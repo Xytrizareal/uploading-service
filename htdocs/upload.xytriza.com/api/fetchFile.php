@@ -1,7 +1,9 @@
 <?php
 require "../config/config.php";
 require '../../../data/vendor/autoload.php';
-include '../incl/main.php';
+require '../incl/mainLib.php';
+
+$main = new mainLib();
 
 use Google\Cloud\Storage\StorageClient;
 
@@ -59,7 +61,7 @@ if (!$stmt->fetch()) {
 </head>
 <body>
     <?php
-    if (checkUserSession($conn)) {
+    if ($main->checkUserSession($conn)) {
         $stmt = $conn->prepare("SELECT role FROM users WHERE session = ?");
         $stmt->bind_param("s", $_COOKIE["session"]);
         $stmt->execute();
@@ -196,7 +198,7 @@ $original_filename = base64_decode($original_filename);
 </head>
 <body>
     <?php
-    if (checkUserSession($conn)) {
+    if ($main->checkUserSession($conn)) {
         $stmt = $conn->prepare("SELECT role FROM users WHERE session = ?");
         $stmt->bind_param("s", $_COOKIE["session"]);
         $stmt->execute();

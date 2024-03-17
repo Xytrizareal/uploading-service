@@ -1,7 +1,6 @@
 <?php
 require '../../../data/vendor/autoload.php';
 require '../config/config.php';
-require '../incl/main.php';
 
 use Google\Cloud\Storage\StorageClient;
 

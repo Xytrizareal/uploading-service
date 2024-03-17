@@ -1,6 +1,5 @@
 <?php
 require '../config/config.php';
-require '../incl/main.php';
 
 $old_username = isset($_POST['oldusername']) ? $_POST['oldusername'] : '';
 $new_username = isset($_POST['newusername']) ? $_POST['newusername'] : '';

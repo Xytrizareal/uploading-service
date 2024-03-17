@@ -1,6 +1,5 @@
 <?php
 require '../config/config.php';
-require '../incl/main.php';
 
 $old_displayname = isset($_POST['olddisplayname']) ? $_POST['olddisplayname'] : '';
 $new_displayname = isset($_POST['newdisplayname']) ? $_POST['newdisplayname'] : '';

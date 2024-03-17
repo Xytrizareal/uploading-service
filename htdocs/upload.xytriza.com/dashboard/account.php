@@ -1,6 +1,8 @@
 <?php
 include '../config/config.php';
-include '../incl/main.php';
+require '../incl/mainLib.php';
+
+$main = new mainLib();
 
 $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
@@ -8,7 +10,7 @@ if ($conn->connect_error) {
     die('Unable to access the database, please try again later');
 }
 
-if (!checkUserSession($conn)) {
+if (!$main->checkUserSession($conn)) {
     setcookie('session', '', time(), "/", "", true, true);
     header('Location: /dashboard/login.php');
     die();
@@ -27,7 +29,7 @@ $displayname = htmlspecialchars($displayname, ENT_QUOTES, 'UTF-8');
 
 $conn->close();
 
-checkDiscordLink($discord_id);
+$main->checkDiscordLink($discord_id);
 
 $role_format = $role == 1 ? "Owner" : ($role == 2 ? "Admin" : ($role == 0 ? "User" : "Unknown"));
 ?>

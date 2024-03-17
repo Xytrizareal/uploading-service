@@ -25,8 +25,8 @@ $discordRedirectUri = "";
 
 $enableCaptcha = false;
 $captchaType = 1; // 1 for hCaptcha, 2 for reCaptcha and 3 for CF-Turnstile
-$CaptchaKey = '';
-$CaptchaSecret = '';
+$captchaKey = '';
+$captchaSecret = '';
 
 $serverUrl = ''; // the server's url, example: https://upload.xytriza.com
 $serverPath = ''; // the server's folder path, example: /home/xytriza-upload/htdocs/upload.xytriza.com

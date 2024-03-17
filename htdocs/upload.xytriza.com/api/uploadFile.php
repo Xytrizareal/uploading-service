@@ -1,18 +1,11 @@
 <?php
 require '../../../data/vendor/autoload.php';
 require '../config/config.php';
-require '../incl/main.php';
+require '../incl/mainLib.php';
+
+$main = new mainLib();
 
 use Google\Cloud\Storage\StorageClient;
-
-function generateRandomString($length) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[random_int(0, strlen($characters) - 1)];
-    }
-    return $randomString;
-}
 
 $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
@@ -95,7 +88,7 @@ if ($row['role'] === 1 && $totalSize > 161061273600) {
 
 if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
     do {
-        $randomString = generateRandomString(8);
+        $randomString = $main->generateRandomString(8);
         $sql = "SELECT id FROM uploads WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $randomString);
@@ -104,7 +97,7 @@ if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
     } while ($result->num_rows > 0);
 
     do {
-        $deleteKey = generateRandomString(24);
+        $deleteKey = $main->generateRandomString(24);
         $sql = "SELECT id FROM uploads WHERE delete_key = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $deleteKey);

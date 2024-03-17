@@ -1,6 +1,8 @@
 <?php
 include '../config/config.php';
-include '../incl/main.php';
+require '../incl/mainLib.php';
+
+$main = new mainLib();
 
 $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
@@ -8,7 +10,7 @@ if ($conn->connect_error) {
     die('Unable to access the database, please try again later');
 }
 
-if (!checkUserSession($conn)) {
+if (!$main->checkUserSession($conn)) {
     setcookie('session', '', time(), "/", "", true, true);
     header('Location: /dashboard/login.php');
     die();
@@ -25,7 +27,7 @@ $stmt->close();
 
 $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
 
-checkDiscordLink($discord_id);
+$main->checkDiscordLink($discord_id);
 
 $sql = "SELECT value FROM settings WHERE id = 1";
 $result = $conn->query($sql);
@@ -108,7 +110,7 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 
-$size = formatUnitSize($totalSize);
+$size = $main->formatUnitSize($totalSize);
 
 $uploadStatsData = json_encode(array_reverse(array_values($uploadsByDay)));
 $overallUploadStatsData = json_encode(array_reverse(array_values($overallUploadsByDay)));

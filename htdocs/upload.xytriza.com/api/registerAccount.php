@@ -1,7 +1,9 @@
 <?php
 require '../config/config.php';
-require '../incl/main.php';
 require '../incl/captcha.php';
+require '../incl/mainLib.php';
+
+$main = new mainLib();
 
 if(!Captcha::validateCaptcha()) {
     $response = [
@@ -86,15 +88,6 @@ if (strlen($request_displayname) < 3 || strlen($request_displayname) > 32) {
     exit;
 }
 
-function generateRandomString($length) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[random_int(0, strlen($characters) - 1)];
-    }
-    return $randomString;
-}
-
 $hashed_password = password_hash($request_password, PASSWORD_DEFAULT);
 
 $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
@@ -113,8 +106,8 @@ if ($result->num_rows > 0) {
     http_response_code(400);
     die(json_encode($response));
 } else {
-    $api_key = generateRandomString(32);
-    $emailconfirm = generateRandomString(255);
+    $api_key = $main->generateRandomString(32);
+    $emailconfirm = $main->generateRandomString(255);
     $emailcontent = '<!DOCTYPE html>
     <html lang="en">
     <head>

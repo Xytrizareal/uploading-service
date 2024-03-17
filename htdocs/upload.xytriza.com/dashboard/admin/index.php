@@ -1,6 +1,8 @@
 <?php
 include '../../config/config.php';
-include '../../incl/main.php';
+require '../../incl/mainLib.php';
+
+$main = new mainLib();
 
 $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
@@ -8,7 +10,7 @@ if ($conn->connect_error) {
     die('Unable to access the database, please try again later');
 }
 
-if (!checkUserSession($conn)) {
+if (!$main->checkUserSession($conn)) {
     setcookie('session', '', time(), "/", "", true, true);
     header('Location: /dashboard/login.php');
     die();
@@ -28,7 +30,7 @@ if ($role !== 1 && $role !== 2) {
     die();
 }
 
-checkDiscordLink($discord_id);
+$main->checkDiscordLink($discord_id);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['news'])) {
@@ -86,7 +88,7 @@ $uploads = $row['COUNT(*)'];
 
 $conn->close();
 
-$size = formatUnitSize($totalSize);
+$size = $main->formatUnitSize($totalSize);
 ?>
 <!DOCTYPE html>
 <html lang="en">

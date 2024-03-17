@@ -1,12 +1,14 @@
 <?php
 require '../config/config.php';
-include '../incl/main.php';
 include '../incl/captcha.php';
+require '../incl/mainLib.php';
+
+$main = new mainLib();
 
 if (isset($_COOKIE['session'])) {
     $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
-    if (!$conn->connect_error && checkUserSession($conn)) {
+    if (!$conn->connect_error && $main->checkUserSession($conn)) {
         header('Location: /dashboard');
         die();
     }

@@ -1,6 +1,8 @@
 <?php
 include '../config/config.php';
-include '../incl/main.php';
+require '../incl/mainLib.php';
+
+$main = new mainLib();
 
 $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
@@ -8,7 +10,7 @@ if ($conn->connect_error) {
     die('Unable to access the database, please try again later');
 }
 
-if (!checkUserSession($conn)) {
+if (!$main->checkUserSession($conn)) {
     setcookie('session', '', time(), "/", "", true, true);
     header('Location: /dashboard/login.php');
     die();
@@ -23,7 +25,7 @@ $stmt->bind_result($uid, $username, $email, $api_key, $role, $discord_id);
 $stmt->fetch();
 $stmt->close();
 
-checkDiscordLink($discord_id);
+$main->checkDiscordLink($discord_id);
 
 $sql = "SELECT id, delete_key, size, original_name, filetype, password FROM uploads WHERE uid = '$uid' ORDER BY uploaded DESC";
 $result = $conn->query($sql);
@@ -95,7 +97,7 @@ $conn->close();
                     }
                     echo '<div class="file-info">';
                     echo '<a href="/files/'.$fileId.'" style="text-decoration: underline;"><p><strong>' . $filename . '</strong></p></a>';
-                    echo '<p>' . formatUnitSize($fileSize) . '</p>';
+                    echo '<p>' . $main->formatUnitSize($fileSize) . '</p>';
                     echo '<div class="icon-container">';
 
                     echo "<div class='fas fa-trash gallery-btn' onclick='deleteFile(\"{$deletionKey}\", \"{$fileId}\")'></div>";

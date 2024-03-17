@@ -1,6 +1,5 @@
 <?php
 require '../config/config.php';
-require '../incl/main.php';
 
 $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 

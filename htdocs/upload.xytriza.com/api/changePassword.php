@@ -1,6 +1,5 @@
 <?php
 require '../config/config.php';
-require '../incl/main.php';
 
 $username = isset($_POST['username']) ? $_POST['username'] : '';
 $old_password = isset($_POST['oldpassword']) ? $_POST['oldpassword'] : '';

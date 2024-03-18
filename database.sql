@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 02, 2024 at 10:12 PM
--- Server version: 8.0.36-0ubuntu0.22.04.1
+-- Generation Time: Mar 18, 2024 at 08:18 PM
+-- Server version: 10.6.16-MariaDB-0ubuntu0.22.04.1
 -- PHP Version: 8.1.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `logins` (
-  `uid` int DEFAULT NULL,
-  `session_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `session_expire` int DEFAULT NULL,
-  `login_ip` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `login_time` int DEFAULT NULL
+  `uid` int(11) DEFAULT NULL,
+  `session_token` varchar(255) NOT NULL,
+  `session_expire` int(11) DEFAULT NULL,
+  `login_ip` varchar(45) DEFAULT NULL,
+  `login_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -42,8 +42,8 @@ CREATE TABLE `logins` (
 --
 
 CREATE TABLE `settings` (
-  `id` int NOT NULL,
-  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
+  `id` int(11) NOT NULL,
+  `value` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -61,14 +61,14 @@ INSERT INTO `settings` (`id`, `value`) VALUES
 --
 
 CREATE TABLE `uploads` (
-  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `uid` int DEFAULT NULL,
-  `uploaded` int DEFAULT NULL,
-  `delete_key` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `size` bigint DEFAULT NULL,
-  `original_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `filetype` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `id` varchar(255) NOT NULL,
+  `uid` int(11) DEFAULT NULL,
+  `uploaded` int(11) DEFAULT NULL,
+  `delete_key` varchar(24) DEFAULT NULL,
+  `size` bigint(20) DEFAULT NULL,
+  `original_name` text DEFAULT NULL,
+  `filetype` varchar(255) DEFAULT NULL,
+  `password` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -78,28 +78,28 @@ CREATE TABLE `uploads` (
 --
 
 CREATE TABLE `users` (
-  `uid` int NOT NULL,
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `display_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `discord_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `api_key` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `role` int DEFAULT NULL,
-  `session` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `session_expire` int DEFAULT NULL,
-  `country` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `timezone` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `dateformat` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `timeformat` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `latest_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `discord_access_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `discord_refresh_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `discord_expires_in` int DEFAULT NULL,
-  `discord_avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `discord_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `emailconfirm` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `register_time` int DEFAULT NULL
+  `uid` int(11) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `display_name` varchar(255) DEFAULT NULL,
+  `password` varchar(60) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `discord_id` varchar(32) DEFAULT NULL,
+  `api_key` varchar(32) DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
+  `session` varchar(255) DEFAULT NULL,
+  `session_expire` int(11) DEFAULT NULL,
+  `country` varchar(80) DEFAULT NULL,
+  `timezone` varchar(80) DEFAULT NULL,
+  `dateformat` varchar(80) DEFAULT NULL,
+  `timeformat` varchar(80) DEFAULT NULL,
+  `latest_ip` varchar(255) DEFAULT NULL,
+  `discord_access_token` varchar(255) DEFAULT NULL,
+  `discord_refresh_token` varchar(255) DEFAULT NULL,
+  `discord_expires_in` int(11) DEFAULT NULL,
+  `discord_avatar` varchar(255) DEFAULT NULL,
+  `discord_email` varchar(255) DEFAULT NULL,
+  `emailconfirm` varchar(255) DEFAULT NULL,
+  `register_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -109,11 +109,11 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `warnings` (
-  `id` int NOT NULL,
-  `user_id` int DEFAULT NULL,
-  `reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `time` int DEFAULT NULL,
-  `staff_uid` int DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `reason` text DEFAULT NULL,
+  `time` int(11) DEFAULT NULL,
+  `staff_uid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -149,6 +149,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `warnings`
   ADD PRIMARY KEY (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

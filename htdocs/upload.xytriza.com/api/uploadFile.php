@@ -119,7 +119,7 @@ if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
     $options = [
         'name' => $randomString,
         'metadata' => [
-            'cacheControl' => 'no-cache, no-store, must-revalidate',
+            'cacheControl' => 'public, max-age=172800',
             'contentType' => $fileType,
         ],
     ];

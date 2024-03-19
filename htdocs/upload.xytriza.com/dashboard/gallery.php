@@ -81,11 +81,11 @@ $conn->close();
 
                     echo '<div class="gallery-item" data-id="' . $fileId . '">';
                     if (in_array($fileType, ["image/png", "image/jpeg", "image/gif", "image/webp", "image/svg+xml"])) {
-                        echo '<img src="/files/'.$fileId.'?raw=true" alt="'.$filename . '"></a>';
+                        echo '<img src="https://storage.googleapis.com/'.$googleBucketName.'/'.$fileId.'" alt="'.$filename . '"></a>';
                     } elseif (in_array($fileType, ["video/mp4", "video/webm", "video/ogg"])) {
-                        echo '<video width="400px" height="200px" controls><source src="' . htmlspecialchars('/files/'.$fileId.'?raw=true') . '" type="' . htmlspecialchars($fileType, ENT_QUOTES, 'UTF-8') . '">Your browser does not support the video tag.</video>';
+                        echo '<video width="400px" height="200px" controls><source src="https://storage.googleapis.com/'.$googleBucketName.'/'.$fileId.'" type="' . htmlspecialchars($fileType, ENT_QUOTES, 'UTF-8') . '">Your browser does not support the video tag.</video>';
                     } elseif (in_array($fileType, ["audio/mpeg", "audio/wav", "audio/ogg"])) {
-                        echo '<audio controls><source src="' . htmlspecialchars('/files/'.$fileId.'?raw=true') . '" type="' . htmlspecialchars($fileType, ENT_QUOTES, 'UTF-8') . '">Your browser does not support the audio element.</audio>';
+                        echo '<audio controls><source src="https://storage.googleapis.com/'.$googleBucketName.'/'.$fileId.'" type="' . htmlspecialchars($fileType, ENT_QUOTES, 'UTF-8') . '">Your browser does not support the audio element.</audio>';
                     } elseif ($fileType == "text/plain") {
                         $fileContent = htmlspecialchars(file_get_contents('/files/'.$fileId.'?raw=true'));
                         if (strlen($fileContent) > 10000) {

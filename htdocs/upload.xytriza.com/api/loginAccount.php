@@ -42,7 +42,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         if (password_verify($request_password, $row["password"])) {
-            $login_ip = $_SERVER['REMOTE_ADDR'];
+            $login_ip = $main->getIPAddress();
             $login_time = time();
             $session_token = $main->generateRandomString(255);
             $session_expires = $login_time + (7 * 24 * 60 * 60);

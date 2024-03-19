@@ -534,7 +534,7 @@ function downloadConfig() {
 }
 
 function setCookieAndRedirect() {
-    document.cookie = "redirect_link=" + window.location.href + "; expires=Session; path=/;";
+    document.cookie = "redirect=true; expires=Session; path=/;";
     window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1204620985798631464&redirect_uri=https%3A%2F%2Fupload.xytriza.com%2Fapi%2Fdashboard%2FdiscordCallback.php&response_type=code&scope=identify+guilds.join+email";
 }
 

@@ -12,7 +12,7 @@ Our server runs on minimal resources since the service is designed to be lightwe
 ## Custom Hosting Paths
 
 We use Nginx for handling specific paths such as `/delete/*` and `/files/*`. Below is the Nginx configuration snippet we employ:
-
+```
 server {
   listen 80;
   server_name upload.xytriza.com;
@@ -28,6 +28,7 @@ server {
     try_files $uri $uri/ /api/deleteFile.php?deletionkey=$uri;
   }
 }
+```
 
 ## Private Use Guide
 

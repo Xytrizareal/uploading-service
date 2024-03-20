@@ -52,6 +52,7 @@ If you still would like to, we recommend raising the upload filesize to atleast 
 
 ## Credits
 - Xytriza - Developer and Owner of the service
+- Cvolton and Megasa1nt (unofficial contribution) - `mainLib.php: Line 109 - 142`, (modified by me) `captcha.php` and `ip_in_range.php` which were all parts from them
 
 ## License
 This service is licensed under the Apache 2.0 License. You can view the license [here](https://github.com/Xytrizareal/uploading-service/blob/master/LICENSE.txt).

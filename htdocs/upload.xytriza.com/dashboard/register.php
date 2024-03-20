@@ -99,7 +99,7 @@ if (isset($_COOKIE['session'])) {
         <form id="loginForm">
             <input type="email" id="email" name="email" placeholder="Email" required>
             <input type="username" id="username" name="username" placeholder="Username" required>
-            <input type="text" id="displayname" name="displayname" placeholder="Display Name (optional)" required>
+            <input type="text" id="displayname" name="displayname" placeholder="Display Name (optional)">
             <input type="password" id="password" name="password" placeholder="Password" required>
             <?php Captcha::displayCaptcha(); ?>
             <button type="submit" id="btn" style="margin-bottom: 5px;">Register</button>

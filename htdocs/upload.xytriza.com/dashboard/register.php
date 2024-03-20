@@ -22,74 +22,7 @@ if (isset($_COOKIE['session'])) {
     <title>Login Page</title>
     <link rel="icon" href="/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
-    <style>
-        body {
-            background-color: #1f1f1f;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            overflow-x: hidden;
-            height: 100vh;
-        }
-
-        #main-container {
-            text-align: center;
-        }
-
-        h1 {
-            color: #3c076e;
-            text-shadow: 2px 2px 4px #000;
-        }
-
-        p {
-            margin-top: 20px;
-            font-size: 18px;
-            text-shadow: 1px 1px 2px #000;
-        }
-
-        #btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #3c076e;
-            color: #fff;
-            text-decoration: none;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            transition: background-color 0.3s, transform 0.3s;
-            cursor: pointer;
-        }
-
-        #btn:hover {
-            background-color: #370664;
-            transform: scale(1.08);
-        }
-
-        input[type="text"], input[type="password"] {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-size: 18px;
-            border: 2px solid #3c076e;
-            border-radius: 5px;
-            background-color: #2f2f2f;
-            color: #fff;
-        }
-
-        input[type="text"]::placeholder, input[type="password"]::placeholder {
-            color: #aaa;
-        }
-
-        a {
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="/assets/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>

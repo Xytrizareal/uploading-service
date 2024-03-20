@@ -4,14 +4,14 @@ Welcome to the official source of Xytriza's Uploading Service!
 
 ## Official Server Information
 
-Our server runs on minimal resources since the service is designed to be lightweight:
+Our server runs on minimal resources since the service is designed to be somewhat lightweight:
 - **CPU**: 1 vCPU
 - **RAM**: 1 GB
-- **Environment**: Tested with PHP 8.3, MariaDB 10.06, and Nginx.
+- **Environment**: Tested with PHP 8.3, MariaDB 10.06, and Nginx only.
 
 ## Custom Hosting Paths
 
-We use Nginx for handling specific paths such as `/delete/*` and `/files/*`. Below is the Nginx configuration snippet we employ:
+We use Nginx for handling specific paths such as `/delete/*` and `/files/*`. Below is the Nginx configuration snippet we use:
 ```
 server {
   listen 80;
@@ -40,7 +40,7 @@ To set up this service for private use, simply follow these steps:
 4. Create a new database and import the `database.sql` file.
 5. Update the `config.php` file with your details.
 6. In your Google Cloud Console, create a new storage bucket. Navigate to the `Permissions` tab, click `Grant Access`, set the principal to `allUsers`, and the role to `Storage Legacy Object Reader`.
-7. You're all set for private use!
+7. Raise the file uploading limit for your Nginx or Apache config to atleast 5GB.
 
 ## Public Use Advisory
 
@@ -48,11 +48,11 @@ We generally advise against using this service for public purposes and suggest o
 
 ## Reporting Bugs and Issues
 
-Encountered any bugs or issues? Kindly report them on our GitHub issues page. We aim to address them promptly.
+Encountered any bugs or issues? Report them on our GitHub issues page [here](https://github.com/Xytrizareal/uploading-service/issues).
 
 ## Severe Exploits and Vulnerabilities
 
-For reporting critical exploits or vulnerabilities, please email us directly at cryfxreal@gmail.com for swift action.
+For reporting critical exploits or vulnerabilities, please email us directly at `cryfxreal@gmail.com` and we will try to fix it soon.
 
 ## Additional Notes
 

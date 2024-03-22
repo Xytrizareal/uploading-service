@@ -2,26 +2,38 @@
 use PHPMailer\PHPMailer\PHPMailer;
 class mainLib {
     public function checkUserSession($conn) {
-        if (isset($_COOKIE['session'])) {
-            $session = $_COOKIE['session'];
-
-            if (str_replace(" ", "", $session) == "" || $session == null) {
-                return false;
-            }
-
-            $stmt = $conn->prepare("SELECT * FROM users WHERE session = ?");
-            $stmt->bind_param("s", $session);
+        if (!isset($_COOKIE['session'])) {
+            return false;
+        }
+    
+        $session = $_COOKIE['session'];
+    
+        if (!preg_match('/^[0-9a-zA-Z]{255}$/', $session)) {
+            return false;
+        }
+    
+        $currentTime = time();
+    
+        try {
+            $stmt = $conn->prepare("SELECT * FROM users WHERE session = ? AND session_expire > ?");
+            $stmt->bind_param("si", $session, $currentTime);
             $stmt->execute();
-            
-            if ($stmt->get_result()->num_rows > 0) {
+            $result = $stmt->get_result();
+    
+            if ($result->num_rows > 0) {
                 return true;
             } else {
                 return false;
             }
-        } else {
+        } catch (Exception $e) {
+            error_log($e->getMessage());
             return false;
+        } finally {
+            if (isset($stmt)) {
+                $stmt->close();
+            }
         }
-    }
+    }    
     public function generateRandomString($length) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';

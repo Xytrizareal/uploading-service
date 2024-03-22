@@ -32,7 +32,11 @@ We generally advise against using this service for public purposes and suggest o
 
 ## Reporting Bugs and Issues
 
-Encountered any bugs or issues? Report them on our GitHub issues page [here](https://github.com/Xytrizareal/uploading-service/issues).
+Encountered any bugs or issues? Report them on our GitHub issues page [here]([https://github.com/Xytrizareal/uploading-service/issues](https://github.com/Xytrizareal/uploading-service/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=)).
+
+## Feature Requests
+
+Want something changed or a feature added? Create a feature request [here](https://github.com/Xytrizareal/uploading-service/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=).
 
 ## Severe Exploits and Vulnerabilities
 

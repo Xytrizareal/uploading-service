@@ -8,4 +8,9 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^delete/(.*)$ /endpoints/deleteFile.php?deletionkey=$1 [L,QSA]
 
+RewriteRule ^legal/privacy/$ /privacy.php [L]
+RewriteRule ^privacy/$ /privacy.php [L]
+RewriteRule ^legal/terms/$ /terms.php [L]
+RewriteRule ^terms/$ /terms.php [L]
+
 RedirectMatch 403 ^/packages/

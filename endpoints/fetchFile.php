@@ -228,7 +228,7 @@ $original_filename = base64_decode($original_filename);
     <div id="container">
         <div id="content">
             <div id="file-container">
-                <h1><? echo "{$original_filename} • {$timeDiff}"; ?></h1>
+                <h1><?php echo "{$original_filename} • {$timeDiff}"; ?></h1>
                 <?php
                 if (in_array($fileType, ["image/png", "image/jpeg", "image/gif", "image/webp", "image/svg+xml"])) {
                     echo '<img src="' . $fileUrl . '" alt="' . htmlspecialchars($file, ENT_QUOTES, 'UTF-8') . '">';

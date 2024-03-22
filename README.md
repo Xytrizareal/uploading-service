@@ -49,7 +49,7 @@ While you can host this service yourself, we strongly recommend using the offici
 
 ## License
 
-This service is under the Apache 2.0 License. View the license [here](https://github.com/Xytrizareal/uploading-service/blob/master/LICENSE.txt).
+This service is under the Apache 2.0 License. View the license [here](https://github.com/Xytrizareal/uploading-service/blob/main/LICENSE.txt).
 
 ## Contact Us
 

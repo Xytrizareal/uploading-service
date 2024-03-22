@@ -262,11 +262,11 @@ function deleteFile(deletionKey, imageId) {
             const isSuccess = responseJson.success === true || responseJson.success === 'true';
 
             if (isSuccess) {
-                const galleryItem = document.querySelector('.gallery-item[data-id="' + imageId + '"]');
-                if (galleryItem) {
-                    galleryItem.remove();
+                const filesItem = document.querySelector('.files-item[data-id="' + imageId + '"]');
+                if (filesItem) {
+                    filesItem.remove();
                 } else {
-                    console.error('Gallery item not found:', deletionKey);
+                    console.error('File item not found:', deletionKey);
                 }
                 console.log('File deleted successfully:', deletionKey);
                 showSuccess("File deleted Successfuly")
@@ -576,14 +576,14 @@ function saveFileSettings() {
             if (response.success) {
                 showSuccess('File settings saved successfully');
 
-                var galleryItem = document.querySelector('.gallery-item[data-id="' + fileSettingsId.value + '"]');
-                if (galleryItem) {
-                    var filenameElement = galleryItem.querySelector('a[target="_blank"] p');
+                var filesItem = document.querySelector('.files-item[data-id="' + fileSettingsId.value + '"]');
+                if (filesItem) {
+                    var filenameElement = filesItem.querySelector('a[target="_blank"] p');
                     if (filenameElement) {
                         filenameElement.textContent = fileSettingsFilename.value;
                     }
 
-                    var settingsButton = galleryItem.querySelector('.fa-cog');
+                    var settingsButton = filesItem.querySelector('.fa-cog');
                     if (settingsButton) {
                         settingsButton.setAttribute('onclick', 'openFileSettings("' + fileSettingsId.value + '", "' + fileSettingsFilename.value + '", "' + fileSettingsPassword.value + '")');
                     }

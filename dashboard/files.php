@@ -39,7 +39,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xytriza's Uploading Service - Gallery</title>
+    <title>Xytriza's Uploading Service - Files</title>
     <link rel="icon" href="/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -52,7 +52,7 @@ $conn->close();
     <div id="sidebar">
         <a href="/" class="logo"><img class="sidebar-item" src="/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
         <a href="/dashboard/"><i class="fas fa-home sidebar-item"></i></a>
-        <a href="/dashboard/gallery.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>
+        <a href="/dashboard/files.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>
         <a href="/dashboard/upload.php"><i class="fas fa-upload sidebar-item"></i></a>
         <a href="/dashboard/settings.php"><i class="fas fa-cog sidebar-item"></i></a>
         <a href="/dashboard/account.php" style="margin-top: auto;"><i class="fas fa-user-cog sidebar-item"></i></a>
@@ -68,7 +68,7 @@ $conn->close();
     <div id="notification-container"></div>
 
     <div id="main-content">
-        <div id="gallery">
+        <div id="files">
             <?php
             if ($result->num_rows > 0) {
                 do {
@@ -79,7 +79,7 @@ $conn->close();
                     $fileSize = $row['size'];
                     $deletionKey = $row['delete_key'];
 
-                    echo '<div class="gallery-item" data-id="' . $fileId . '">';
+                    echo '<div class="files-item" data-id="' . $fileId . '">';
                     if (in_array($fileType, ["image/png", "image/jpeg", "image/gif", "image/webp", "image/svg+xml"])) {
                         echo '<img src="https://storage.googleapis.com/'.$googleBucketName.'/'.$fileId.'" alt="'.$filename . '"></a>';
                     } elseif (in_array($fileType, ["video/mp4", "video/webm", "video/ogg"])) {
@@ -100,10 +100,10 @@ $conn->close();
                     echo '<p>' . $main->formatUnitSize($fileSize) . '</p>';
                     echo '<div class="icon-container">';
 
-                    echo "<div class='fas fa-trash gallery-btn' onclick='deleteFile(\"{$deletionKey}\", \"{$fileId}\")'></div>";
-                    echo "<div class='fas fa-clipboard gallery-btn' onclick='copyToClipboard(\"{$serverUrl}/files/{$fileId}\", \"File URL copied to Clipboard\", \"0\")'></div>";
-                    echo "<div class='fas fa-download gallery-btn' onclick='downloadFile(\"{$fileId}\", \"{$filename}\", \"{$fileType}\")'></div>";
-                    echo "<div class='fas fa-cog gallery-btn' onclick='openFileSettings(\"{$fileId}\", \"{$filename}\", \"{$filePassword}\")'></div>";
+                    echo "<div class='fas fa-trash files-btn' onclick='deleteFile(\"{$deletionKey}\", \"{$fileId}\")'></div>";
+                    echo "<div class='fas fa-clipboard files-btn' onclick='copyToClipboard(\"{$serverUrl}/files/{$fileId}\", \"File URL copied to Clipboard\", \"0\")'></div>";
+                    echo "<div class='fas fa-download files-btn' onclick='downloadFile(\"{$fileId}\", \"{$filename}\", \"{$fileType}\")'></div>";
+                    echo "<div class='fas fa-cog files-btn' onclick='openFileSettings(\"{$fileId}\", \"{$filename}\", \"{$filePassword}\")'></div>";
 
                     echo '</div>';
                     echo '</div>';
@@ -135,12 +135,12 @@ $conn->close();
     <script>
         function skipload() {
             document.getElementById("loading").style.display = "none";
-            document.getElementById("gallery").style.display = "flex";
+            document.getElementById("files").style.display = "flex";
         }
 
         window.onload = function() {
             document.getElementById("loading").style.display = "none";
-            document.getElementById("gallery").style.display = "flex";
+            document.getElementById("files").style.display = "flex";
         };
     </script>
 </body>

@@ -71,7 +71,7 @@ if (!$stmt->fetch()) {
     <div id="sidebar">
         <a href="/" class="logo"><img class="sidebar-item" src="/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
         <a href="/dashboard/"><i class="fas fa-home sidebar-item"></i></a>
-        <a href="/dashboard/gallery.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>
+        <a href="/dashboard/files.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>
         <a href="/dashboard/upload.php"><i class="fas fa-upload sidebar-item"></i></a>
         <a href="/dashboard/settings.php"><i class="fas fa-cog sidebar-item"></i></a>
         <?php
@@ -208,7 +208,7 @@ $original_filename = base64_decode($original_filename);
         echo '<div id="sidebar">';
         echo '<a href="/" class="logo"><img class="sidebar-item" src="/assets/logo.png" alt="Xytriza\'s Uploading Service" height="40vw" width="40vw"></a>';
         echo '<a href="/dashboard/"><i class="fas fa-home sidebar-item"></i></a>';
-        echo '<a href="/dashboard/gallery.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>';
+        echo '<a href="/dashboard/files.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>';
         echo '<a href="/dashboard/upload.php"><i class="fas fa-upload sidebar-item"></i></a>';
         echo '<a href="/dashboard/settings.php"><i class="fas fa-cog sidebar-item"></i></a>';
         echo '<a href="/dashboard/account.php" style="margin-top: auto;"><i class="fas fa-user-cog sidebar-item"></i></a>';
@@ -253,7 +253,7 @@ $original_filename = base64_decode($original_filename);
             if (in_array($fileType, ["text/plain"])) {
                 echo '<button class="button" onclick="copyToClipboard(\'' . $fileContent . '\', \'File content copied to clipboard\', 0)">Copy</button>';
             }
-            if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], "$serverUrl/dashboard/gallery.php") !== false) {
+            if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], "$serverUrl/dashboard/files.php") !== false) {
                 echo '<button class="button" onclick="window.history.back()">Back</button>';
             }
             ?>

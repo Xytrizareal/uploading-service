@@ -1,0 +1,11 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^files/(.*)$ /endpoints/fetchFile.php?url=$1&raw=%{QUERY_STRING} [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^delete/(.*)$ /endpoints/deleteFile.php?deletionkey=$1 [L,QSA]
+
+RedirectMatch 403 ^/packages/

@@ -6,7 +6,6 @@ $dbname = "";
 
 $googleProjectId = "";
 $googleBucketName = "";
-$googleKeyFilePath = "";
 
 $discordBotToken = "";
 $discordChannelId = "";
@@ -31,9 +30,14 @@ $captchaSecret = '';
 $serverUrl = ''; // the server's url, example: https://upload.xytriza.com
 $serverPath = ''; // the server's folder path, example: /home/xytriza-upload/htdocs/upload.xytriza.com
 
-if (empty($dbservername) || empty($dbusername) || empty($dbpassword) || empty($dbname) || empty($googleProjectId) || empty($googleBucketName) || empty($googleKeyFilePath) || empty($serverUrl) || empty($serverPath)) {
+if (empty($dbservername) || empty($dbusername) || empty($dbpassword) || empty($dbname) || empty($googleProjectId) || empty($googleBucketName) || empty($serverUrl) || empty($serverPath)) {
     http_response_code(500);
     die("Please check your config file (are all fields filled in?).");
+}
+
+if (!file_exists(__DIR__ . '/../packages/auth.json') || file_get_contents(__DIR__ . '/../packages/auth.json') == "Config for Google Cloud Storage will go here") {
+    http_response_code(500);
+    die("Please check your Google Cloud Storage IAM Service Account key is valid. (packages/auth.json)");
 }
 
 if ($enableCaptcha) {

@@ -1,5 +1,5 @@
 <?php
-require '../../../data/vendor/autoload.php';
+require '../packages/vendor/autoload.php';
 require '../config/config.php';
 require '../incl/mainLib.php';
 
@@ -107,7 +107,7 @@ if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
 
     $storage = new StorageClient([
         'projectId' => $googleProjectId,
-        'keyFilePath' => $googleKeyFilePath,
+        'keyFilePath' => '../packages/auth.json',
     ]);
 
     $bucket = $storage->bucket($googleBucketName);

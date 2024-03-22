@@ -1,6 +1,6 @@
 <?php
 require "../config/config.php";
-require '../../../data/vendor/autoload.php';
+require '../packages/vendor/autoload.php';
 require '../incl/mainLib.php';
 
 $main = new mainLib();
@@ -33,7 +33,7 @@ if ($_GET['raw'] == 'true') {
 
 $storage = new StorageClient([
     'projectId' => $googleProjectId,
-    'keyFilePath' => $googleKeyFilePath,
+    'keyFilePath' => '../packages/auth.json',
 ]);
 $bucket = $storage->bucket($googleBucketName);
 

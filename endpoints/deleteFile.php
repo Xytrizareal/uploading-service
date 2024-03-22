@@ -1,5 +1,8 @@
 <?php
-require '../../../data/vendor/autoload.php';
+
+//this is literally an api endpoint but ill make them seperate soon
+
+require '../packages/vendor/autoload.php';
 require '../config/config.php';
 
 use Google\Cloud\Storage\StorageClient;
@@ -44,7 +47,7 @@ if ($result->num_rows > 0) {
 
     $storage = new StorageClient([
         'projectId' => $googleProjectId,
-        'keyFilePath' => $googleKeyFilePath,
+        'keyFilePath' => '../packages/auth.json',
     ]);
 
     $bucket = $storage->bucket($googleBucketName);

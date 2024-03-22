@@ -7,40 +7,24 @@ Welcome to the official source of Xytriza's Uploading Service!
 Our server runs on minimal resources since the service is designed to be somewhat lightweight:
 - **CPU**: 1 vCPU
 - **RAM**: 1 GB
-- **Environment**: Tested with PHP 8.3, MariaDB 10.06, and Nginx only.
-
-## Custom Hosting Paths
-
-We use Nginx for handling specific paths such as `/delete/*` and `/files/*`. Below is the Nginx configuration snippet we use:
-```
-server {
-  listen 80;
-  server_name upload.xytriza.com;
-
-  try_files $uri $uri/ index.php?$args;
-  index index.php index.html;
-  
-  location /files/ {
-    try_files $uri $uri/ /api/fetchFile.php?url=$uri&raw=$arg_raw;
-  }
-  
-  location /delete/ {
-    try_files $uri $uri/ /api/deleteFile.php?deletionkey=$uri;
-  }
-}
-```
+- **Environment**: Tested with PHP 8.3.4, MariaDB 10.6, and Apache.
 
 ## Private Use Guide
 
 To set up this service for private use, simply follow these steps:
 
-1. Clone the repository: `git clone https://github.com/XytrizaReal/uploading-service.git && cd uploading-service`
-2. Upload the files to your server.
-3. Install the necessary packages: `composer install` within the `data` folder.
+1. Clone the repository using `git clone https://github.com/XytrizaReal/uploading-service.git && cd uploading-service`.
+2. Upload files to a webserver.
+3. Install the necessary packages: `composer install` within the `vendor` folder.
 4. Create a new database and import the `database.sql` file.
 5. Update the `config.php` file with your details.
 6. In your Google Cloud Console, create a new storage bucket. Navigate to the `Permissions` tab, click `Grant Access`, set the principal to `allUsers`, and the role to `Storage Legacy Object Reader`.
-7. Raise the file uploading limit for your Nginx or Apache config to atleast 5GB.
+7. Make a IAM Service Account and upload the JSON to `packages` with filename `auth.json`.
+8. Raise the file uploading limit for your Apache config to atleast 5GB.
+
+## Warning
+
+If you do not use Apache, **you WILL have security issues with IAM Service Account json being accessed by anybody**. We highly recommend using Apache.
 
 ## Public Use Advisory
 

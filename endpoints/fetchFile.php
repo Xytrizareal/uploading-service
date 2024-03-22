@@ -167,19 +167,19 @@ $original_filename = base64_decode($original_filename);
 <html lang="en">
 <head>
     <meta name="robots" content="noindex">
-    <title><?php echo $original_filename . ' - ' . $username;?></title>
+    <title><?php echo htmlspecialchars($original_filename . ' - ' . $username); ?></title>
     <link rel="icon" href="/assets/logo.png" type="image/png">
     <meta charset="UTF-8">
-    <meta name="description" content="<?php echo 'Uploaded ' . $formattedDate . ' by ' . $username;?>">
-    <meta property="og:title" content="<?php echo $original_filename?>">
-    <meta property="og:description" content="<?php echo 'Uploaded ' . $formattedDate . ' by ' . $username;?>">
+    <meta name="description" content="<?php echo 'Uploaded ' . htmlspecialchars($formattedDate) . ' by ' . htmlspecialchars($username); ?>">
+    <meta property="og:title" content="<?php echo htmlspecialchars($original_filename); ?>">
+    <meta property="og:description" content="<?php echo 'Uploaded ' . htmlspecialchars($formattedDate) . ' by ' . htmlspecialchars($username); ?>">
     <meta property="og:site_name" content="Xytriza's Uploading Service">
-    <?
+    <?php
     if (in_array($fileType, ["image/png", "image/jpeg", "image/gif", "image/webp", "image/svg+xml"])) {
-        echo '<meta property="og:image" content="' . $fileUrl . '">
-        <meta property="og:image:alt" content="' . $original_filename . '">
-        <meta property="og:image:width" content="' . $width . '">
-        <meta property="og:image:height" content="' . $height . '">';
+        echo '<meta property="og:image" content="' . htmlspecialchars($serverUrl) . '/files/' . htmlspecialchars($file) . '?raw=true">' . "\n";
+        echo '<meta property="og:image:alt" content="' . htmlspecialchars($original_filename) . '">' . "\n";
+        echo '<meta property="og:image:width" content="' . htmlspecialchars($width) . '">' . "\n";
+        echo '<meta property="og:image:height" content="' . htmlspecialchars($height) . '">' . "\n";
     }
     ?>
     <meta property="theme-color" content="#3c076e">
@@ -204,23 +204,22 @@ $original_filename = base64_decode($original_filename);
         $stmt->execute();
 
         $role = $stmt->get_result()->fetch_assoc()["role"];
-        ?>
-    <div id="sidebar">
-        <a href="/" class="logo"><img class="sidebar-item" src="/assets/logo.png" alt="Xytriza's Uploading Service" height="40vw" width="40vw"></a>
-        <a href="/dashboard/"><i class="fas fa-home sidebar-item"></i></a>
-        <a href="/dashboard/gallery.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>
-        <a href="/dashboard/upload.php"><i class="fas fa-upload sidebar-item"></i></a>
-        <a href="/dashboard/settings.php"><i class="fas fa-cog sidebar-item"></i></a>
-        <a href="/dashboard/account.php" style="margin-top: auto;"><i class="fas fa-user-cog sidebar-item"></i></a>
-        <?php
+
+        echo '<div id="sidebar">';
+        echo '<a href="/" class="logo"><img class="sidebar-item" src="/assets/logo.png" alt="Xytriza\'s Uploading Service" height="40vw" width="40vw"></a>';
+        echo '<a href="/dashboard/"><i class="fas fa-home sidebar-item"></i></a>';
+        echo '<a href="/dashboard/gallery.php"><i class="fas fa-file-alt sidebar-item" style="margin-left: 20%;"></i></a>';
+        echo '<a href="/dashboard/upload.php"><i class="fas fa-upload sidebar-item"></i></a>';
+        echo '<a href="/dashboard/settings.php"><i class="fas fa-cog sidebar-item"></i></a>';
+        echo '<a href="/dashboard/account.php" style="margin-top: auto;"><i class="fas fa-user-cog sidebar-item"></i></a>';
+
         if ($role === 1 || $role === 2) {
-            echo '<a href="/dashboard/admin" class="sidebar-item"><i class="fas fa-user-shield"></i></a>
-            <a href="/dashboard/admin/users.php" class="sidebar-item"><i class="fas fa-user-edit"></i></a>';
+            echo '<a href="/dashboard/admin" class="sidebar-item"><i class="fas fa-user-shield"></i></a>';
+            echo '<a href="/dashboard/admin/users.php" class="sidebar-item"><i class="fas fa-user-edit"></i></a>';
         }
-        ?>
-        <a href="javascript:logout()"><i class="fas fa-sign-out-alt sidebar-item"></i></a>
-    </div>
-    <?php
+
+        echo '<a href="javascript:logout()"><i class="fas fa-sign-out-alt sidebar-item"></i></a>';
+        echo '</div>';
     }
     ?>
 

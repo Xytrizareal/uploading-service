@@ -5,6 +5,10 @@ class mainLib {
         if (isset($_COOKIE['session'])) {
             $session = $_COOKIE['session'];
 
+            if (str_replace(" ", "", $session) == "" || $session == null) {
+                return false;
+            }
+
             $stmt = $conn->prepare("SELECT * FROM users WHERE session = ?");
             $stmt->bind_param("s", $session);
             $stmt->execute();

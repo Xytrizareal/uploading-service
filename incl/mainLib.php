@@ -112,7 +112,7 @@ class mainLib {
             <h1>Discord link required</h1>
             <p>You need to link your Discord account to use this service.</p>
             <button onclick="setCookieAndRedirect()">Link Discord</button>
-    </div>
+        </div>
     </div>
 </body>
 </html>
@@ -122,6 +122,7 @@ class mainLib {
     }
     public function getIPAddress() {
         //from cvolton
+        include_once __DIR__ . "/ip_in_range.php";
 		if (isset($_SERVER['HTTP_CF_CONNECTING_IP']) && $this->isCloudFlareIP($_SERVER['REMOTE_ADDR']))
             return $_SERVER['HTTP_CF_CONNECTING_IP'];
         if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && ipInRange::ipv4_in_range($_SERVER['REMOTE_ADDR'], '127.0.0.0/8'))

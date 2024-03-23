@@ -27,7 +27,7 @@ $stmt->close();
 
 $main->checkDiscordLink($discord_id);
 
-$sql = "SELECT id, delete_key, size, original_name, filetype, password FROM uploads WHERE uid = '$uid' ORDER BY uploaded DESC";
+$sql = "SELECT id, delete_key, size, original_name, filetype FROM uploads WHERE uid = '$uid' ORDER BY uploaded DESC";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
@@ -74,7 +74,6 @@ $conn->close();
                 do {
                     $fileId = basename($row['id']);
                     $filename = basename(base64_decode($row['original_name']));
-                    $filePassword = $row['password'];
                     $fileType = $row['filetype'];
                     $fileSize = $row['size'];
                     $deletionKey = $row['delete_key'];
@@ -103,7 +102,7 @@ $conn->close();
                     echo "<div class='fas fa-trash files-btn' onclick='deleteFile(\"{$deletionKey}\", \"{$fileId}\")'></div>";
                     echo "<div class='fas fa-clipboard files-btn' onclick='copyToClipboard(\"{$serverUrl}/files/{$fileId}\", \"File URL copied to Clipboard\", \"0\")'></div>";
                     echo "<div class='fas fa-download files-btn' onclick='downloadFile(\"{$fileId}\", \"{$filename}\", \"{$fileType}\")'></div>";
-                    echo "<div class='fas fa-cog files-btn' onclick='openFileSettings(\"{$fileId}\", \"{$filename}\", \"{$filePassword}\")'></div>";
+                    echo "<div class='fas fa-pencil-alt files-btn' onclick='renameFile(\"{$fileId}\")'></div>";
 
                     echo '</div>';
                     echo '</div>';
@@ -116,21 +115,6 @@ $conn->close();
     </div>
 
     <h1 id="loading">Loading files... <a href="javascript:skipload();" style="color: #fff; text-decoration: underline;">Show anyway</a></h1>
-    <div id="file-settings" style="position: fixed; z-index: 99999; display: none; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        <div id="file-settings-container">
-            <div id="file-settings-content">
-                <h1 style="text-align: center; margin-bottom: 5px;">File Settings</h1>
-                <div id="file-settings-close" onclick="closeFileSettings()"><i class="fas fa-times"></i></div>
-                <div id="file-settings-form">
-                    <input type="text" id="file-settings-password" placeholder="File Password">
-                    <input type="text" id="file-settings-filename" placeholder="Filename">
-                    <input type="hidden" id="file-settings-id" placeholder="File ID">
-                    <!--<p style="text-align: center">Do not use a personal password.</p>-->
-                    <button style="margin: auto; display:block;" onclick="saveFileSettings()">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         function skipload() {

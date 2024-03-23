@@ -12,7 +12,7 @@ if (isset($_GET['code']) && !empty($_GET['code']) && isset($_COOKIE['session']) 
         'client_secret' => $discordClientSecret,
         'grant_type' => 'authorization_code',
         'code' => $code,
-        'redirect_uri' => $discordRedirectUri,
+        'redirect_uri' => $serverUrl . "/api/dashboard/discordCallback.php",
         'scope' => 'identify guilds.join, email, identify'
     ]));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -91,11 +91,11 @@ if (isset($_GET['code']) && !empty($_GET['code']) && isset($_COOKIE['session']) 
     $stmt->bind_param("sssssss", $userData['id'], $data['access_token'], $data['refresh_token'], $data['expires_in'], $avatar, $userData['email'], $sqlData['email']);
     $stmt->execute();
 
-    if (isset($_COOKIE['redirect']) && !empty($_COOKIE['redirect']) && $_COOKIE['redirect'] == true) {
-        header('Location: /dashboard/account.php');
-        setcookie('redirect', '', time(), '/', '', true, true);
-        die();
-    }
+    if (isset($_COOKIE['redirectPath']) && strpos(base64_decode($_COOKIE['redirectPath']), $serverUrl) === 0) {
+        header('Location: ' . base64_decode($_COOKIE['redirectPath']));
+        setcookie('redirectPath', '', time() - 3600, '/', '', true, true);
+        exit();
+    }    
 
     $response = [
         'success' => 'true',

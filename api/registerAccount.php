@@ -105,94 +105,95 @@ if ($result->num_rows > 0) {
 
     http_response_code(400);
     die(json_encode($response));
-} else {
-    $api_key = $main->generateRandomString(32);
-    $emailconfirm = $main->generateRandomString(255);
-    $emailcontent = '<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Email Confirmation</title>
-        <style>
-            body {
-                font-family: "Arial", sans-serif;
-                background-color: #1f1f1f;
-                margin: 0;
-                padding: 0;
-                text-align: center;
-            }
+}
 
-            .container {
-                background-color: #222;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                margin: 20px auto;
-                padding: 20px;
-                max-width: 600px;
-            }
+$register_ip = $main->getIPAddress();
+$api_key = $main->generateRandomString(32);
+$emailconfirm = $main->generateRandomString(255);
+$emailcontent = '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #1f1f1f;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
 
-            h1 {
-                color: #fff;
-            }
+        .container {
+            background-color: #222;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+        }
 
-            p {
-                color: #fff;
-                font-size: 16px;
-                line-height: 1.6;
-            }
+        h1 {
+            color: #fff;
+        }
 
-            a {
-                display: inline-block;
-                padding: 12px 24px;
-                font-size: 16px;
-                text-align: center;
-                text-decoration: none;
-                color: #fff !important;
-                background-color: #3c076e;
-                border-radius: 5px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Email Confirmation</h1>
-            <p>Thank you for signing up with Xytriza\'s Uploading Service! We\'re excited to have you on board.</p>
-            <p>To complete the registration process, please click on the link below to confirm your email address:</p>
-    
-            <a href="' . $serverUrl . '/confirm-email/' . $emailconfirm . '">Confirm Your Email</a>
-    
-            <p>If you did not sign up for Xytriza\'s Uploading Service, please disregard this email and the account will be unregistered within 2 hours.</p>
-    
-            <p>Thank you,<br>Xytriza\'s Uploading Service Team</br></p>
-        </div>
-    </body>
-    </html>';
-    $emailresult = true;//sendEmail($noreply_email_address, $noreply_email_password, $noreply_email_address, $request_email, $request_username, "Action Required: Confirm Your Email Address with Xytriza\'s Uploading Service", $emailcontent, true, 'smtp.ionos.com');
-    // will do soon (real)
+        p {
+            color: #fff;
+            font-size: 16px;
+            line-height: 1.6;
+        }
 
-    if (!$emailresult) {
-        $response = [
-            'success' => 'false',
-            'response' => 'Error sending conformation email, please try again later'
-        ];
-    
-        http_response_code(500);
-        echo json_encode($response);
-    }
+        a {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff !important;
+            background-color: #3c076e;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Email Confirmation</h1>
+        <p>Thank you for signing up with Xytriza\'s Uploading Service! We\'re excited to have you on board.</p>
+        <p>To complete the registration process, please click on the link below to confirm your email address:</p>
 
-    $stmt = $conn->prepare("INSERT INTO users (username, display_name, password, email, api_key, emailconfirm, register_time) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssi", $request_username, $request_displayname, $hashed_password, $request_email, $api_key, $emailconfirm, time());
-    $stmt->execute();
+        <a href="' . $serverUrl . '/confirm-email/' . $emailconfirm . '">Confirm Your Email</a>
 
+        <p>If you did not sign up for Xytriza\'s Uploading Service, please disregard this email and the account will be unregistered within 2 hours.</p>
+
+        <p>Thank you,<br>Xytriza\'s Uploading Service Team</br></p>
+    </div>
+</body>
+</html>';
+$emailresult = true;//sendEmail($noreply_email_address, $noreply_email_password, $noreply_email_address, $request_email, $request_username, "Action Required: Confirm Your Email Address with Xytriza\'s Uploading Service", $emailcontent, true, 'smtp.ionos.com');
+// will do soon (real)
+
+if (!$emailresult) {
     $response = [
-        'success' => 'true',
-        'response' => 'Account created successfully'
+        'success' => 'false',
+            'response' => 'Error sending conformation email, please try again later'
     ];
 
-    http_response_code(200);
+    http_response_code(500);
     echo json_encode($response);
 }
+
+$stmt = $conn->prepare("INSERT INTO users (username, display_name, password, email, api_key, emailconfirm, register_time, latest_ip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssssis", $request_username, $request_displayname, $hashed_password, $request_email, $api_key, $emailconfirm, time(), $register_ip);
+$stmt->execute();
+
+$response = [
+    'success' => 'true',
+    'response' => 'Account created successfully'
+];
+
+http_response_code(200);
+echo json_encode($response);
 
 $stmt->close();
 $conn->close();

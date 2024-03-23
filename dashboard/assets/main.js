@@ -416,6 +416,11 @@ function logout() {
 }
 
 async function handleFileUpload(file) {
+    if (file.size > 104857600) {
+        showError('File size exceeds the 100MB limit.');
+        return;
+    }
+
     let formData = new FormData();
     formData.append('file', file);
 
@@ -452,6 +457,7 @@ async function handleFileUpload(file) {
 }
 
 async function handleUrlUpload() {
+    return;
     const url = document.getElementById('urlInput').value = document.getElementById('urlInput').value.replace('https://upload.xytriza.com/files/', 'https://files.upload.xytriza.com/').replace('http://upload.xytriza.com/files/', 'https://files.upload.xytriza.com/');
     const fileName = document.getElementById('fileName').value;
     if (!url) {
@@ -534,80 +540,7 @@ function downloadConfig() {
 }
 
 function setCookieAndRedirect() {
-    document.cookie = "redirect=true; expires=Session; path=/;";
-    window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1204620985798631464&redirect_uri=https%3A%2F%2Fupload.xytriza.com%2Fapi%2Fdashboard%2FdiscordCallback.php&response_type=code&scope=identify+guilds.join+email";
-}
-
-function openFileSettings(fileId, filename, filepassword) {
-    showError("Feature coming soon!");
-    return
-    var fileSettings = document.getElementById('file-settings');
-    var fileSettingsPassword = document.getElementById('file-settings-password');
-    var fileSettingsFilename = document.getElementById('file-settings-filename');
-    var fileSettingsId = document.getElementById('file-settings-id');
-    document.body.classList.add('tint');
-
-    fileSettingsPassword.value = filepassword;
-    fileSettingsFilename.value = filename;
-    fileSettingsId.value = fileId;
-
-    fileSettings.style.display = 'block';
-}
-
-function saveFileSettings() {
-    var fileSettingsPassword = document.getElementById('file-settings-password');
-    var fileSettingsFilename = document.getElementById('file-settings-filename');
-    var fileSettingsId = document.getElementById('file-settings-id');
-    var fileSettings = document.getElementById('file-settings');
-
-    fileSettings.style.display = 'none';
-    document.body.classList.remove('tint');
-
-    $.ajax({
-        url: '/api/filePreferences.php',
-        type: 'POST',
-        data: {
-            fileId: fileSettingsId.value,
-            password: fileSettingsPassword.value,
-            filename: fileSettingsFilename.value
-        },
-        success: function(response) {
-            console.log('Server response:', response);
-            if (response.success) {
-                showSuccess('File settings saved successfully');
-
-                var filesItem = document.querySelector('.files-item[data-id="' + fileSettingsId.value + '"]');
-                if (filesItem) {
-                    var filenameElement = filesItem.querySelector('a[target="_blank"] p');
-                    if (filenameElement) {
-                        filenameElement.textContent = fileSettingsFilename.value;
-                    }
-
-                    var settingsButton = filesItem.querySelector('.fa-cog');
-                    if (settingsButton) {
-                        settingsButton.setAttribute('onclick', 'openFileSettings("' + fileSettingsId.value + '", "' + fileSettingsFilename.value + '", "' + fileSettingsPassword.value + '")');
-                    }
-                }
-            } else {
-                showError(response.response);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            showError(jqXHR.responseText);
-        }
-    });
-}
-
-function closeFileSettings() {
-    var fileSettings = document.getElementById('file-settings');
-    fileSettings.style.display = 'none';
-    document.body.classList.remove('tint');
-
-    var fileSettingsPassword = document.getElementById('file-settings-password');
-    var fileSettingsFilename = document.getElementById('file-settings-filename');
-
-    fileSettingsPassword.value = '';
-    fileSettingsFilename.value = '';
+    window.location.href = "/api/dashboard/discordCallbackRedirect.php?path=" + btoa(window.location.href);
 }
 
 function generateAPIKey() {
@@ -664,22 +597,34 @@ function deleteAllFiles() {
     });
 }
 
-test = function() {
-    $.ajax({
-        url: '/api/dashboard/setStatus.php',
-        type: 'GET',
-        headers: {
-            'status': 'online'
-        },
-    });
+function renameFile(fileId) {
+    var fileName = prompt("New file name: ")
 
-    setInterval(function() {
-        $.ajax({
-            url: '/api/dashboard/setStatus.php',
-            type: 'GET',
-            headers: {
-                'status': 'online'
-            },
-        });
-    }, 120000);
+    if (!fileName) {
+        return;
+    }
+
+    $.ajax({
+        url: '/api/renameFile.php',
+        type: 'POST',
+        data: {fileId: fileId, fileName: fileName},
+        success: function(response) {
+            console.log('Server response:', response);
+            if (response.success) {
+                var fileItem = document.querySelector('.files-item[data-id="' + fileId + '"]');
+                if (fileItem) {
+                    var filenameElement = fileItem.querySelector('a > p strong');
+                    if (filenameElement) {
+                        filenameElement.textContent = fileName;
+                    }
+                }
+                showSuccess('File renamed successfully');
+            } else {
+                showError(response.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            showError(jqXHR.responseText);
+        }
+    });
 }

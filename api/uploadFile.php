@@ -57,25 +57,7 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $totalSize = $row['totalSize'];
 
-if ($row['role'] === 1 && $totalSize > 161061273600) {
-    $response = [
-        'success' => false,
-        'response' => 'You cannot use more than 150GB of storage',
-    ];
-
-    http_response_code(403);
-    header('Content-Type: application/json');
-    die(json_encode($response));
-} elseif ($row['role'] === 2 && $totalSize > 26843545600) {
-    $response = [
-        'success' => false,
-        'response' => 'You cannot use more than 25GB of storage',
-    ];
-
-    http_response_code(403);
-    header('Content-Type: application/json');
-    die(json_encode($response));
-} else if ($totalSize > 5368709120) {
+if ($totalSize > 5368709120) {
     $response = [
         'success' => false,
         'response' => 'You cannot use more than 5GB of storage',
@@ -87,6 +69,16 @@ if ($row['role'] === 1 && $totalSize > 161061273600) {
 }
 
 if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
+    if ($_FILES['file']['size'] > 104857600) {
+        $response = [
+            'success' => false,
+            'response' => 'File size must be within 100MB',
+        ];
+    
+        http_response_code(400);
+        header('Content-Type: application/json');
+        die(json_encode($response));
+    }
     do {
         $randomString = $main->generateRandomString(8);
         $sql = "SELECT id FROM uploads WHERE id = ?";

@@ -13,7 +13,8 @@ RewriteRule ^privacy/$ /privacy.php [L]
 RewriteRule ^legal/terms/$ /terms.php [L]
 RewriteRule ^terms/$ /terms.php [L]
 
-php_value upload_max_filesize 100MB
-php_value memory_limit 100MB
+php_value upload_max_filesize 100M
+php_value post_max_size 120M
+php_value memory_limit 100M
 
 RedirectMatch 403 ^/packages/

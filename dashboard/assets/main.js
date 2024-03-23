@@ -442,8 +442,7 @@ async function handleFileUpload(file) {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             if (response.success === true) {
-                copyToClipboard(response.fileUrl, "", 0);
-                showSuccess('File uploaded successfully. Link copied to clipboard');
+                window.href = response.fileUrl;
             } else {
                 showError(response.response);
             }

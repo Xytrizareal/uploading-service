@@ -70,7 +70,7 @@ $conn->close();
         </div>
         <input type="file" id="fileInput" style="display: none;" />
         <p>Max upload filesize: 100MB</p>
-        <p>Or upload a file from a URL <b>(filesize limit applys)</b></p>
+        <p>Or upload a file from a URL (filesize limit applys)</p>
         <div id="urlUpload">
             <input type="text" id="urlInput" placeholder="Enter Direct File URL" />
             <input type="text" id="fileName" placeholder="File URL Filename" />

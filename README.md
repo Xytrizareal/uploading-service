@@ -20,7 +20,6 @@ To set up this service for private use, simply follow these steps:
 5. Update the `config.php` file with your details.
 6. In your Google Cloud Console, create a new storage bucket. Navigate to the `Permissions` tab, click `Grant Access`, set the principal to `allUsers`, and the role to `Storage Legacy Object Reader`.
 7. Make a IAM Service Account and upload the JSON to `packages` with filename `auth.json`.
-8. Raise the file uploading limit for your Apache config to atleast 5GB.
 
 ## Warning
 

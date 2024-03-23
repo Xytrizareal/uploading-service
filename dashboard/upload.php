@@ -66,16 +66,15 @@ $conn->close();
 
     <div id="upload">
         <div id="dropZone">
-            <p>Drag and drop a file here or click to upload</p>
+            <p>Drag and drop a file here or click to upload<br>Max upload file size: 100MB</p>
         </div>
         <input type="file" id="fileInput" style="display: none;" />
-        <p>Max upload filesize: 100MB</p>
-        <p>Or upload a file from a URL (filesize limit applys)</p>
+        <!--<p>Or upload a file from a URL (filesize limit applys)</p>
         <div id="urlUpload">
             <input type="text" id="urlInput" placeholder="Enter Direct File URL" />
             <input type="text" id="fileName" placeholder="File URL Filename" />
             <button onclick="handleUrlUpload()" style="display: block; margin-left: auto; margin-right: auto;">Upload</button>
-        </div>
+        </div>-->
         <div id="progressText" class="progressText" style="display: none; font-weight: bold;">0%</div>
     </div>
 </body>

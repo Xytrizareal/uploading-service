@@ -395,7 +395,11 @@ function saveTimeSettings() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            showError(jqXHR.responseText);
+            if (jqXHR.responseJSON && jqXHR.responseJSON.response) {
+                showError(jqXHR.responseJSON.response);
+            } else {
+                showError(jqXHR.responseText);
+            }
         }
     });
 
@@ -555,7 +559,11 @@ function generateAPIKey() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            showError(jqXHR.responseText);
+            if (jqXHR.responseJSON && jqXHR.responseJSON.response) {
+                showError(jqXHR.responseJSON.response);
+            } else {
+                showError(jqXHR.responseText);
+            }
         }
     });
 }
@@ -573,7 +581,11 @@ function copyAPIKey() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            showError(jqXHR.responseText);
+            if (jqXHR.responseJSON && jqXHR.responseJSON.response) {
+                showError(jqXHR.responseJSON.response);
+            } else {
+                showError(jqXHR.responseText);
+            }
         }
     });
 }
@@ -591,7 +603,11 @@ function deleteAllFiles() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            showError(jqXHR.responseText);
+            if (jqXHR.responseJSON && jqXHR.responseJSON.response) {
+                showError(jqXHR.responseJSON.response);
+            } else {
+                showError(jqXHR.responseText);
+            }
         }
     });
 }
@@ -614,7 +630,7 @@ function renameFile(fileId) {
                 if (fileItem) {
                     var filenameElement = fileItem.querySelector('a > p strong');
                     if (filenameElement) {
-                        filenameElement.textContent = fileName;
+                        filenameElement.textContent = response.filename;
                     }
                 }
                 showSuccess('File renamed successfully');
@@ -623,7 +639,11 @@ function renameFile(fileId) {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            showError(jqXHR.responseText);
+            if (jqXHR.responseJSON && jqXHR.responseJSON.response) {
+                showError(jqXHR.responseJSON.response);
+            } else {
+                showError(jqXHR.responseText);
+            }
         }
     });
 }

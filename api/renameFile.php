@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 $apiKey = isset($_POST['key']) ? $_POST['key'] : null;
 $session = isset($_COOKIE['session']) ? $_COOKIE['session'] : null;
 $fileId = isset($_POST['fileId']) ? $_POST['fileId'] : null;
-$fileName = isset($_POST['fileName']) ? base64_encode($_POST['fileName']) : null;
+$fileName = isset($_POST['fileName']) ? $_POST['fileName'] : null;
 
 if (!$apiKey && !$session) {
     http_response_code(401);
@@ -61,17 +61,17 @@ if ($result->num_rows == 0) {
     exit;
 }
 
-if (empty($fileName) || str_replace(" ", "", $fileName) == "") {
+if (!isset($fileName) || trim($fileName) === '') {
     http_response_code(400);
     echo json_encode(['success' => false, 'response' => 'Filename cannot be empty']);
     exit;
 }
 
 $stmt = $conn->prepare("UPDATE uploads SET original_name = ? WHERE id = ?");
-$stmt->bind_param("ss", $fileName, $fileId);
+$stmt->bind_param("ss", base64_encode(trim($fileName)), $fileId);
 $stmt->execute();
 $stmt->close();
 
-echo json_encode(['success' => true, 'response' => 'File name changed successfully']);
+echo json_encode(['success' => true, 'response' => 'File name changed successfully', 'filename' => trim($fileName)]);
 
 $conn->close();

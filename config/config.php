@@ -26,5 +26,8 @@ $captchaKey = '';
 $captchaSecret = '';
 
 $serverUrl = ''; // the server's url, example: https://upload.xytriza.com
-$serverPath = ''; // the server's folder path, example: /home/xytriza-upload/htdocs/upload.xytriza.com
+
+if (empty($dbservername) || empty($dbusername) || empty($dbpassword) || empty($dbname) || empty($googleProjectId) || empty($googleBucketName) || empty($discordBotToken) || empty($discordGuildId) || empty($discordClientId) || empty($discordClientSecret) || empty($serverUrl)) {
+	die("The configuration is incomplete. Please fill in all fields in the configuration file.");
+}
 ?>

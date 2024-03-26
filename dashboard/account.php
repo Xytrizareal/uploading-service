@@ -43,10 +43,9 @@ $role_format = $role == 1 ? "Owner" : ($role == 2 ? "Admin" : ($role == 0 ? "Use
     <link rel="icon" href="/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.css'); ?>">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime(__DIR__.'/assets/main.css'); ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/dashboard/assets/main.js?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.js'); ?>"></script>
+    <script src="/dashboard/assets/main.js?v=<?php echo filemtime(__DIR__.'/assets/main.js'); ?>"></script>
 </head>
 <body>
     <div id="sidebar">

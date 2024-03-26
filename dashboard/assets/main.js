@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function deleteFile(deletionKey, imageId) {
-    const deleteUrl = 'https://upload.xytriza.com/delete/' + deletionKey;
+    const deleteUrl = '/delete/' + deletionKey;
 
     $.ajax({
         url: deleteUrl,
@@ -328,7 +328,7 @@ async function copyToClipboard(text, message, type) {
 
 function downloadFile(fileId, originalName, fileType) {
     $.ajax({
-        url: 'https://files.upload.xytriza.com/' + fileId,
+        url: '/files/' + fileId + "?raw=true&download=true",
         method: 'GET',
         xhrFields: {
             responseType: 'blob'
@@ -380,7 +380,7 @@ function saveTimeSettings() {
     var timeFormat = getSelectedRadioValue(timeFormatElements);
 
     $.ajax({
-        url: 'https://upload.xytriza.com/api/dashboard/setPreferences.php',
+        url: '/api/dashboard/setPreferences.php',
         type: 'POST',
         data: {country: country, timezone: timezone, dateformat: dateFormat, timeformat: timeFormat},
         success: function(responseJson) {

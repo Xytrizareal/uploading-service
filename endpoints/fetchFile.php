@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require "../config/config.php";
 require '../packages/vendor/autoload.php';
 require '../incl/mainLib.php';
@@ -26,16 +28,25 @@ if ($conn->connect_error) {
 
 $file = rtrim(str_replace("/files/", "", htmlspecialchars($_GET["url"])), "/");
 
-if ($_GET['raw'] == 'true') {
-    $file = str_replace("?raw=true", "", $file);
-    header("Location: https://storage.googleapis.com/$googleBucketName/$file");
-}
-
 $storage = new StorageClient([
     'projectId' => $googleProjectId,
     'keyFilePath' => '../packages/auth.json',
 ]);
 $bucket = $storage->bucket($googleBucketName);
+
+if (isset($_GET['raw']) && $_GET['raw'] == 'true') {
+    $file = str_replace(["?raw=true&raw=true", "?raw=true"], "", $file);
+    if (isset($_GET['download']) && $_GET['download'] == 'true') {
+        $object = $bucket->object($file);
+        $objectData = $object->downloadAsString();
+        header("Content-Type: " . $object->info()['contentType']);
+        echo $objectData;
+        exit;
+    } else {
+        header("Location: https://storage.googleapis.com/$googleBucketName/$file");
+        exit;
+    }
+}
 
 $stmt = $conn->prepare("SELECT id, uid, uploaded, original_name, filetype FROM uploads WHERE id = ?");
 $stmt->bind_param("s", $file);
@@ -54,10 +65,10 @@ if (!$stmt->fetch()) {
     <link rel="icon" href="/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.css'); ?>">
+    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime(__DIR__.'/assets/main.css'); ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/dashboard/assets/main.js?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.js'); ?>"></script>
+    <script src="/dashboard/assets/main.js?v=<?php echo filemtime(__DIR__.'/assets/main.js'); ?>"></script>
 </head>
 <body>
     <?php
@@ -186,9 +197,9 @@ $original_filename = base64_decode($original_filename);
     <meta property="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.css'); ?>">
+    <link rel="stylesheet" href="/dashboard/assets/main.css?v=<?php echo filemtime(__DIR__.'/assets/main.css'); ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/dashboard/assets/main.js?v=<?php echo filemtime($serverPath.'/dashboard/assets/main.js'); ?>"></script>
+    <script src="/dashboard/assets/main.js?v=<?php echo filemtime(__DIR__.'/assets/main.js'); ?>"></script>
     <style>
         img {
             max-width: 50vw;
